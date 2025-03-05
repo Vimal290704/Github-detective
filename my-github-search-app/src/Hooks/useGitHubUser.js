@@ -6,6 +6,7 @@ const useGitHubData = (username, detailType) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log(username, detailType);
     if (!username) {
       setData(null);
       setError(null);
@@ -18,17 +19,12 @@ const useGitHubData = (username, detailType) => {
     setData(null);
 
     let endpoint = `https://api.github.com/users/${username}`;
-    if (detailType !== "user") {
+    if (detailType !== "overview") {
       endpoint += `/${detailType}`;
     }
-
     const fetchData = async () => {
       try {
-        const response = await fetch(endpoint, {
-          headers: {
-            Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-          },
-        });
+        const response = await fetch(endpoint);
         if (!response.ok) {
           setError(`Error: ${response.status} - ${response.statusText}`);
           setLoading(false);

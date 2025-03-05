@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 import useGitHubData from "../Hooks/useGitHubUser";
@@ -16,7 +17,7 @@ import SubscriptionsList from "../components/SubscriptionsList";
 
 const DetailPage = ({ detailKey }) => {
   const { username } = useOutletContext();
-  const endpoint = detailKey === "overview" ? "user" : detailKey;
+  const endpoint = detailKey;
   const { data, error, loading } = useGitHubData(username, endpoint);
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
@@ -25,6 +26,7 @@ const DetailPage = ({ detailKey }) => {
     case "overview":
       return <UserCard user={data} />;
     case "repos":
+      console.log(data);
       return <RepoList repos={data} />;
     case "followers":
       return <FollowerList followers={data} />;
